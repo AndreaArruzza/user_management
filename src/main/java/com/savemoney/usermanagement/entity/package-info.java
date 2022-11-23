@@ -1,0 +1,1 @@
+package com.savemoney.usermanagement.entity;
