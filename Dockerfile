@@ -1,6 +1,10 @@
+
+# For Java 11,
 FROM adoptopenjdk/openjdk11:alpine-jre
-LABEL author="andrearru@hotmail.it"
-LABEL desc = "this is user management docker"
-WORKDIR /usermanagement
-COPY target/*.jar /usermanagement/usermanagement.jar
-ENTRYPOINT ["java","-jar","usermanagement.jar"]
+LABEL MAINTAINER="andrearru@hotmail.com"
+
+COPY --chown=1001:0 target/*.jar /application/
+
+WORKDIR /application
+USER 1001
+ENTRYPOINT ["java","-jar","user-management.jar"]
