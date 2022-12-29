@@ -1,0 +1,30 @@
+version: '1'
+
+services:
+  user_management:
+    image: 'user_management_image:v1'
+    build:
+      context: .
+    container_name: user_management
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/SavemMoney
+      - SPRING_DATASOURCE_USERNAME=andrew92
+      - SPRING_DATASOURCE_PASSWORD=Arrudb!92
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+          
+  postgres:
+    image: 'postgres:13.1-alpine'
+	volumes:
+      - savemoney_volume:/var/lib/postgresql
+    container_name: postgres
+	ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=andrew92
+      - POSTGRES_PASSWORD=Arrudb!92
+	  - POSTGRES_DB: SaveMoney
+
+volumes:
+	savemoney_volume: 
