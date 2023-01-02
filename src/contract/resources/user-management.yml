@@ -1,0 +1,253 @@
+openapi: "3.0.1"
+info:
+  title: OpenApi definition
+  version: v0
+servers:
+  - url: http://localhost:8081/user-management/api
+    description: Generated server url
+paths:
+  /v1/user-management/users:
+    get:
+      summary: get a list of user
+      operationId: getUsers
+      tags:
+        - user-management-controller
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersResource'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+  /v1/user-management/users/{email}:
+    get:
+      summary: get a user by email or id
+      operationId: getUsersByEmail
+      tags:
+        - user-management-controller
+      parameters:
+        - name: email
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResource'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+  /v1/user-management/check-user-exists:
+    get:
+      summary: check if existing an user by email and password
+      operationId: CheckExistingUser
+      tags:
+        - user-management-controller
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+        - in: query
+          name: userId
+          schema:
+            type: string
+        - in: query
+          name: password
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckUserExists'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+  /v1/user-management/create-user:
+    post:
+      summary: Create a new user
+      operationId: createUser
+      tags:
+        - user-management-controller
+      requestBody:
+        description: new user dto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResource'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+  /v1/user-management/update-user:
+    put:
+      summary: update an existing user
+      operationId: updateUser
+      tags:
+        - user-management-controller
+      requestBody:
+        description: update user dto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserResource'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+components:
+  schemas:
+    ListUsersResource:
+      type: object
+      properties:
+        UsersList:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResource'
+
+    UserResource:
+      type: object
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        birthPlace:
+          type: string
+          format: date
+        address:
+          type: string
+        postalCode:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        password:
+          type: string
+        isValid:
+          type: boolean
+
+    CreateUserDto:
+      type: object
+      required:
+        - name
+        - surname
+        - email
+        - password
+      properties:
+        name:
+          type: string
+        surname:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+    CreateUserResource:
+      type: object
+      properties:
+        userId:
+          type: string
+        isCreatedUser:
+          type: boolean
+
+    UpdateUserDto:
+      type: object
+      required:
+        - email
+      properties:
+        name:
+          type: string
+        surname:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        birthPlace:
+          type: string
+          format: date
+        address:
+          type: string
+        postalCode:
+          type: string
+        phone:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+
+    UpdateUserResource:
+      type: object
+      properties:
+        userId:
+          type: string
+        isUpdateUser:
+          type: boolean
+
+    CheckUserExists:
+      type: object
+      properties:
+        isUserExists:
+          type: boolean
