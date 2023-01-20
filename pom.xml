@@ -32,10 +32,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
-	<!--	<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -147,17 +147,28 @@
 								</goals>
 								<configuration>
 									<generatorName>spring</generatorName>
+									<addCompileSourceRoot>false</addCompileSourceRoot>
+									<skipOverwrite>false</skipOverwrite>
 									<inputSpec>
 										${project.basedir}/src/contract/resources/user-management.yml
 									</inputSpec>
 									<apiPackage>com.savemoney.usermanagement.contract.api.v1</apiPackage>
 									<modelPackage>com.savemoney.usermanagement.contract.model.v1</modelPackage>
-									<supportingFilesToGenerate>
-										ApiUtil.java
-									</supportingFilesToGenerate>
+									<packageName>com.savemoney.usermanagement.contract</packageName>
+									<generateApiDocumentation>false</generateApiDocumentation>
+									<generateModelDocumentation>false</generateModelDocumentation>
+									<output>${project.basedir}</output>
+									<generateSupportingFiles>true</generateSupportingFiles>
+									<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
 									<configOptions>
 										<sourceFolder>src/contract/java</sourceFolder>
 										<dateLibrary>java8</dateLibrary>
+										<interfaceOnly>true</interfaceOnly>
+										<useBeanValidation>true</useBeanValidation>
+										<documentationProvider>none</documentationProvider>
+										<annotationLibrary>swagger2</annotationLibrary>
+										<openApiNullable>false</openApiNullable>
+										<skipDefaultInterface>true</skipDefaultInterface>
 									</configOptions>
 								</configuration>
 							</execution>

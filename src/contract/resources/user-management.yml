@@ -3,22 +3,25 @@ info:
   title: OpenApi definition
   version: v0
 servers:
-  - url: http://localhost:8081/user-management/api
+  - url: http://localhost:8081/user-management/v1/api
     description: Generated server url
+tags:
+  - name: user-management-controller
+
 paths:
-  /v1/user-management/users:
+  /user-management/v1/users:
     get:
-      summary: get a list of user
-      operationId: getUsers
       tags:
         - user-management-controller
+      summary: get a list of user
+      operationId: getUsers
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListUsersResource'
+                $ref: '#/components/schemas/UsersResource'
         '201':
           description: Created
         '401':
@@ -28,17 +31,18 @@ paths:
         '404':
           description: Not found
 
-  /v1/user-management/users/{email}:
+  /user-management/v1/users/{id}:
     get:
-      summary: get a user by email or id
-      operationId: getUsersByEmail
       tags:
         - user-management-controller
+      summary: get a user by id
+      operationId: getUserById
       parameters:
-        - name: email
+        - name: id
           in: path
           schema:
-            type: string
+            type: integer
+            format: int64
           required: true
       responses:
         '200':
@@ -56,23 +60,19 @@ paths:
         '404':
           description: Not found
 
-  /v1/user-management/check-user-exists:
+  /user-management/v1/check-user-exists:
     get:
-      summary: check if existing an user by email and password
-      operationId: CheckExistingUser
       tags:
         - user-management-controller
+      summary: check if existing an user by id and email
+      operationId: checkUserExists
       parameters:
         - in: query
+          name: id
+          schema:
+            type: string
+        - in: query
           name: email
-          schema:
-            type: string
-        - in: query
-          name: userId
-          schema:
-            type: string
-        - in: query
-          name: password
           schema:
             type: string
       responses:
@@ -81,7 +81,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CheckUserExists'
+                $ref: '#/components/schemas/CheckUserExistsResource'
         '201':
           description: Created
         '401':
@@ -91,18 +91,18 @@ paths:
         '404':
           description: Not found
 
-  /v1/user-management/create-user:
+  /user-management/v1/create-user:
     post:
-      summary: Create a new user
-      operationId: createUser
       tags:
         - user-management-controller
+      summary: Create a new user
+      operationId: createUser
       requestBody:
         description: new user dto
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUserDto'
+              $ref: '#/components/schemas/UserDto'
         required: true
       responses:
         '200':
@@ -120,7 +120,7 @@ paths:
         '404':
           description: Not found
 
-  /v1/user-management/update-user:
+  /user-management/v1/update-user:
     put:
       summary: update an existing user
       operationId: updateUser
@@ -131,7 +131,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateUserDto'
+              $ref: '#/components/schemas/UserDto'
         required: true
       responses:
         '200':
@@ -151,7 +151,7 @@ paths:
 
 components:
   schemas:
-    ListUsersResource:
+    UsersResource:
       type: object
       properties:
         UsersList:
@@ -212,11 +212,23 @@ components:
         isCreatedUser:
           type: boolean
 
-    UpdateUserDto:
+    UserDto:
       type: object
       required:
+        - id
         - email
+        - password
+        - isValid
       properties:
+        id:
+          type: integer
+          format: int64
+        email:
+          type: string
+        password:
+          type: string
+        isValid:
+          type: boolean
         name:
           type: string
         surname:
@@ -226,17 +238,11 @@ components:
           format: date
         birthPlace:
           type: string
-          format: date
         address:
-          type: string
-        postalCode:
           type: string
         phone:
           type: string
-        password:
-          type: string
-        email:
-          type: string
+
 
     UpdateUserResource:
       type: object
@@ -246,7 +252,7 @@ components:
         isUpdateUser:
           type: boolean
 
-    CheckUserExists:
+    CheckUserExistsResource:
       type: object
       properties:
         isUserExists:
