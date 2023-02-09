@@ -1,0 +1,262 @@
+openapi: "3.0.1"
+info:
+  title: OpenApi definition
+  version: v0
+servers:
+  - url: http://localhost:8081/user-management/v1/api
+    description: Generated server url
+
+paths:
+  /user-management/v1/users:
+    get:
+      summary: get a list of user
+      operationId: getUsers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersResource'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+
+  /user-management/v1/user/{id}/{details}:
+    get:
+      summary: get a user by id. If details is set a true, it retrieve userDetail otherwise no
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+        - name: details
+          in: path
+          schema:
+            type: boolean
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResource'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+
+  /user-management/v1/check-if-user-exists:
+    post:
+      summary: check if existing an user by id and email
+      operationId: checkIfUserExists
+      requestBody:
+        description: body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckIfUserExistsDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckIfUserExistsResource'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+  /user-management/v1/create-user:
+    post:
+      summary: Create a new user
+      operationId: createUser
+      requestBody:
+        description: new user dto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newUser'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResource'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+  /user-management/v1/update-user:
+    put:
+      summary: update an existing user
+      operationId: updateUser
+      requestBody:
+        description: update user dto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserResource'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+components:
+  schemas:
+    UsersResource:
+      type: object
+      properties:
+        UsersList:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResource'
+
+    UserResource:
+      type: object
+      properties:
+        userId:
+          type: string
+        password:
+          type: string
+        isValid:
+          type: boolean
+        userDetail:
+            $ref: '#/components/schemas/UserDetailResource'
+
+    UserDetailResource:
+      type: object
+      properties:
+        name:
+          type: string
+        surname:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        birthPlace:
+          type: string
+          format: date
+        address:
+          type: string
+        postalCode:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+
+    CheckIfUserExistsDto:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+        email:
+          type: string
+
+    CheckIfUserExistsResource:
+      type: object
+      properties:
+        isUserExists:
+          type: boolean
+
+
+    newUser:
+      type: object
+      required:
+        - email
+        - password
+        - isValid
+      properties:
+        email:
+          type: string
+        password:
+           type: string
+        isValid:
+           type: boolean
+
+
+    UserDto:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+        email:
+          type: string
+        password:
+          type: string
+        isValid:
+          type: boolean
+        name:
+          type: string
+        surname:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        birthPlace:
+          type: string
+        address:
+          type: string
+        phone:
+          type: string
+
+    CreateUserResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        isCreatedUser:
+          type: boolean
+
+    UpdateUserResource:
+      type: object
+      properties:
+        message:
+          type: string
