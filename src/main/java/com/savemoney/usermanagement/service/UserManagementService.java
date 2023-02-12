@@ -50,7 +50,7 @@ public class UserManagementService {
 
     @Transactional
     public String updateUser(UserDto userDto) {
-            User userbyId = getUserById(userDto.getId(),true);
+            User userbyId = getUserById(userDto.getId(),false);
             userbyId.setPassword(userDto.getPassword());
             userbyId.setIsValid(userDto.getIsValid());
 
