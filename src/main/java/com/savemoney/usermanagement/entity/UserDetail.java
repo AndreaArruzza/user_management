@@ -13,8 +13,8 @@ import java.time.LocalDate;
 public class UserDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id", nullable = false)
     private Long id;
 
     @Column(name = "name")
@@ -34,6 +34,7 @@ public class UserDetail {
 
     @Column(name = "phone")
     private String phone;
+
 
     public UserDetail() {
     }

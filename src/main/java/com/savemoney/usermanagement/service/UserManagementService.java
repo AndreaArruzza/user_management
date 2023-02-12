@@ -1,17 +1,21 @@
 package com.savemoney.usermanagement.service;
 
-import com.savemoney.usermanagement.contract.model.v1.*;
 import com.savemoney.usermanagement.entity.User;
 import com.savemoney.usermanagement.entity.UserDetail;
-import com.savemoney.usermanagement.model.CheckUserExistsModel;
+import com.savemoney.usermanagement.mapper.UserMapper;
+import com.savemoney.usermanagement.model.v1.UserDto;
 import com.savemoney.usermanagement.repository.UserRepository;
-import net.bytebuddy.asm.Advice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @Service
 public class UserManagementService {
@@ -19,47 +23,55 @@ public class UserManagementService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
+    private UserMapper userMapper;
+    @Autowired
     private UserRepository userRepository;
 
-    public UserResource getUserById(Long userId) {
-        userRepository.findById(userId);
+
+    public User getUserById(Long userId, Boolean details) {
+        User user = userRepository.findByIdAndIsValidIsTrue(userId).orElseThrow(() -> new RuntimeException("no user found"));
+        //todo creare custom exception
+        if(!details){
+            user.setUserDetail(null);
+        }
+        return user;
     }
 
-    public UsersResource getUsers() {
-        userRepository.findAll();
+    public List<User> getUsers() {
+        List<User> users =  userRepository.findAllByIsValidIsTrue();
+        if(CollectionUtils.isEmpty(users)) throw new RuntimeException("empty list");
+        return users;
     }
 
-    public String updateUser(UserDto updateUserDto) {
-        User user = new User();
-        user.setId(updateUserDto.getId());
-        user.setEmail(updateUserDto.getEmail());
-        user.setPassword(updateUserDto.getPassword());
-        user.setIsValid(updateUserDto.getIsValid());
+    @Transactional
+    public String updateUser(UserDto userDto) {
+        Optional<User> u = userRepository.findByIdAndIsValidIsTrue(userDto.getId());
+        User userbyId = u.orElseThrow(() -> new RuntimeException("no user found"));
 
+        userbyId.setEmail(userDto.getEmail());
+        userbyId.setPassword(userDto.getPassword());
+        userbyId.setIsValid(userDto.getIsValid());
+
+        userbyId.getUserDetail().setName(userDto.getName());
+        userbyId.getUserDetail().setSurname(userDto.getSurname());
+        userbyId.getUserDetail().setBirthPlace(userDto.getBirthPlace());
+        userbyId.getUserDetail().setBirthDate(userDto.getBirthDate());
+        userbyId.getUserDetail().setAddress(userDto.getAddress());
+        userbyId.getUserDetail().setPhone(userDto.getPhone());
+        userRepository.save(userbyId);
+        return "update is OK!";
+    }
+
+    @Transactional
+    public Long createUser(User newUser) {
         UserDetail userDetail = new UserDetail();
-        userDetail.setName(updateUserDto.getName());
-        userDetail.setSurname(updateUserDto.getSurname());
-        userDetail.setBirthDate(updateUserDto.getBirthDate());
-        userDetail.setBirthPlace(updateUserDto.getBirthPlace());
-        user.setUserDetail(userDetail);
-
-        userRepository.save(user);
+        newUser.setUserDetail(userDetail);
+        User insertedUser = userRepository.save(newUser);
+        return insertedUser.getId();
     }
 
-    public String createUser(UserDto createUserDto) {
-        User user = new User();
-        user.setId(createUserDto.getId());
-        user.setEmail(createUserDto.getEmail());
-        user.setPassword(createUserDto.getPassword());
-        user.setIsValid(createUserDto.getIsValid());
-        user.setUserDetail(new UserDetail());
-
-        userRepository.save(user);
-    }
-
-    public Boolean checkUserExists(String userId, String email) {
-        Optional<User> user = userRepository.findByIdAndEmail(userId,email);
-        CheckUserExistsResource resource = new CheckUserExistsResource();
+    public Boolean checkUserExists(Long userId, String email) {
+        Optional<User> user = userRepository.findByIsValidIsTrueAndIdOrEmail(userId,email);
         return (user.isPresent()) ? Boolean.TRUE : Boolean.FALSE;
     }
 }

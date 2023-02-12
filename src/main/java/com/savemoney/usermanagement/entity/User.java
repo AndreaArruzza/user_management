@@ -1,44 +1,61 @@
 package com.savemoney.usermanagement.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name ="USER")
+@Table(name ="user", schema = "public")
 @Getter
 @Setter
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",  nullable = false)
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_detail_id")
+    @JoinColumn(name = "user_detail_id", referencedColumnName = "id")
     private UserDetail userDetail;
 
-    @Column(name ="email", unique = true)
+    @Column(name ="email", unique = true, nullable = false)
     private String email;
 
-    @Column(name ="password", unique = true)
+    @Column(name ="password", nullable = false)
     private String password;
 
-    @Column(name ="is_valid", unique = true)
+    @Column(name ="is_valid", nullable = false)
     private Boolean isValid;
+
+    @Column(name ="created_on", updatable = false)
+    private LocalDateTime createdOn;
+
+    @Column(name ="last_login")
+    private LocalDateTime lastLogin;
+
+    @PrePersist
+    public void setDates(){
+        LocalDateTime now = LocalDateTime.now();
+        this.createdOn = now;
+        this.lastLogin = now;
+    }
 
     public User() {
     }
 
-    public User(Long id, UserDetail userDetail, String email, String password, Boolean isValid) {
+    public User(Long id, UserDetail userDetail, String email, String password, Boolean isValid, LocalDateTime createdOn, LocalDateTime lastLogin) {
         this.id = id;
         this.userDetail = userDetail;
         this.email = email;
         this.password = password;
         this.isValid = isValid;
+        this.createdOn = createdOn;
+        this.lastLogin = lastLogin;
     }
 
     @Override

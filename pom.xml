@@ -2,35 +2,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.5</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<groupId>com.savemoney</groupId>
 	<artifactId>usermanagement</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
+
 	<name>usermanagement</name>
 
+	<description>
+		user management microservice
+	</description>
 
 	<properties>
 		<java.version>11</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<jar.name>user-management</jar.name>
+
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 		<org.mapstruct.binding.version>0.2.0</org.mapstruct.binding.version>
 		<org.lombok.version>1.18.24</org.lombok.version>
 	</properties>
 
 	<dependencies>
-		<!-- starter section -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -38,17 +43,19 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
-<!--		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>-->
 
 		<!-- open api -->
 		<dependency>
@@ -82,17 +89,31 @@
 			<optional>true</optional>
 		</dependency>
 
-    </dependencies>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+	</dependencies>
+
 
 	<build>
-		<finalName>user-management</finalName>
+		<defaultGoal>spring-boot:run</defaultGoal>
+		<finalName>${jar.name}</finalName>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<finalName>${jar.name}</finalName>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.1.3.RELEASE</version>
 				<configuration>
-					<mainClass>com.savemoney.usermanagement.Application</mainClass>
+					<mainClass>com.savemoney.usermanagement.usermanagement.Application</mainClass>
 				</configuration>
 				<executions>
 					<execution>
@@ -101,11 +122,12 @@
 						</goals>
 					</execution>
 				</executions>
+				<version>2.7.5</version>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
 				<configuration>
 					<source>11</source>
 					<target>11</target>
@@ -127,6 +149,40 @@
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.commonjava.maven.plugins</groupId>
+				<artifactId>project-sources-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>project-sources-archive</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>archive</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src\contract\java</source>
+								<source>src\contract\resources</source>
+								<source>target/generated-sources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -152,9 +208,9 @@
 									<inputSpec>
 										${project.basedir}/src/contract/resources/user-management.yml
 									</inputSpec>
-									<apiPackage>com.savemoney.usermanagement.contract.api.v1</apiPackage>
-									<modelPackage>com.savemoney.usermanagement.contract.model.v1</modelPackage>
-									<packageName>com.savemoney.usermanagement.contract</packageName>
+									<apiPackage>com.savemoney.usermanagement.api.v1</apiPackage>
+									<modelPackage>com.savemoney.usermanagement.model.v1</modelPackage>
+									<packageName>com.savemoney.usermanagement</packageName>
 									<generateApiDocumentation>false</generateApiDocumentation>
 									<generateModelDocumentation>false</generateModelDocumentation>
 									<output>${project.basedir}</output>
