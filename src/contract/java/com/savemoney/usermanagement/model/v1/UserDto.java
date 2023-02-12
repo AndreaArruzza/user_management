@@ -19,14 +19,11 @@ import javax.annotation.Generated;
  * UserDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-09T09:19:28.207671900+01:00[Europe/Rome]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-12T19:40:14.230716700+01:00[Europe/Rome]")
 public class UserDto   {
 
   @JsonProperty("id")
   private Long id;
-
-  @JsonProperty("email")
-  private String email;
 
   @JsonProperty("password")
   private String password;
@@ -70,25 +67,6 @@ public class UserDto   {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public UserDto email(String email) {
-    this.email = email;
-    return this;
-  }
-
-  /**
-   * Get email
-   * @return email
-  */
-  
-  @Schema(name = "email", required = false)
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
   }
 
   public UserDto password(String password) {
@@ -253,7 +231,6 @@ public class UserDto   {
     }
     UserDto userDto = (UserDto) o;
     return Objects.equals(this.id, userDto.id) &&
-        Objects.equals(this.email, userDto.email) &&
         Objects.equals(this.password, userDto.password) &&
         Objects.equals(this.isValid, userDto.isValid) &&
         Objects.equals(this.name, userDto.name) &&
@@ -266,7 +243,7 @@ public class UserDto   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, email, password, isValid, name, surname, birthDate, birthPlace, address, phone);
+    return Objects.hash(id, password, isValid, name, surname, birthDate, birthPlace, address, phone);
   }
 
   @Override
@@ -274,7 +251,6 @@ public class UserDto   {
     StringBuilder sb = new StringBuilder();
     sb.append("class UserDto {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    isValid: ").append(toIndentedString(isValid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");

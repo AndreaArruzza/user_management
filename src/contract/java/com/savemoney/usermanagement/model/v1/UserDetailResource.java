@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  * UserDetailResource
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-09T09:19:28.207671900+01:00[Europe/Rome]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-12T19:40:14.230716700+01:00[Europe/Rome]")
 public class UserDetailResource   {
 
   @JsonProperty("name")
@@ -33,17 +33,10 @@ public class UserDetailResource   {
   private LocalDate birthDate;
 
   @JsonProperty("birthPlace")
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDate birthPlace;
+  private String birthPlace;
 
   @JsonProperty("address")
   private String address;
-
-  @JsonProperty("postalCode")
-  private String postalCode;
-
-  @JsonProperty("email")
-  private String email;
 
   @JsonProperty("phone")
   private String phone;
@@ -105,7 +98,7 @@ public class UserDetailResource   {
     this.birthDate = birthDate;
   }
 
-  public UserDetailResource birthPlace(LocalDate birthPlace) {
+  public UserDetailResource birthPlace(String birthPlace) {
     this.birthPlace = birthPlace;
     return this;
   }
@@ -114,13 +107,13 @@ public class UserDetailResource   {
    * Get birthPlace
    * @return birthPlace
   */
-  @Valid 
+  
   @Schema(name = "birthPlace", required = false)
-  public LocalDate getBirthPlace() {
+  public String getBirthPlace() {
     return birthPlace;
   }
 
-  public void setBirthPlace(LocalDate birthPlace) {
+  public void setBirthPlace(String birthPlace) {
     this.birthPlace = birthPlace;
   }
 
@@ -141,44 +134,6 @@ public class UserDetailResource   {
 
   public void setAddress(String address) {
     this.address = address;
-  }
-
-  public UserDetailResource postalCode(String postalCode) {
-    this.postalCode = postalCode;
-    return this;
-  }
-
-  /**
-   * Get postalCode
-   * @return postalCode
-  */
-  
-  @Schema(name = "postalCode", required = false)
-  public String getPostalCode() {
-    return postalCode;
-  }
-
-  public void setPostalCode(String postalCode) {
-    this.postalCode = postalCode;
-  }
-
-  public UserDetailResource email(String email) {
-    this.email = email;
-    return this;
-  }
-
-  /**
-   * Get email
-   * @return email
-  */
-  
-  @Schema(name = "email", required = false)
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
   }
 
   public UserDetailResource phone(String phone) {
@@ -214,14 +169,12 @@ public class UserDetailResource   {
         Objects.equals(this.birthDate, userDetailResource.birthDate) &&
         Objects.equals(this.birthPlace, userDetailResource.birthPlace) &&
         Objects.equals(this.address, userDetailResource.address) &&
-        Objects.equals(this.postalCode, userDetailResource.postalCode) &&
-        Objects.equals(this.email, userDetailResource.email) &&
         Objects.equals(this.phone, userDetailResource.phone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, surname, birthDate, birthPlace, address, postalCode, email, phone);
+    return Objects.hash(name, surname, birthDate, birthPlace, address, phone);
   }
 
   @Override
@@ -233,8 +186,6 @@ public class UserDetailResource   {
     sb.append("    birthDate: ").append(toIndentedString(birthDate)).append("\n");
     sb.append("    birthPlace: ").append(toIndentedString(birthPlace)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
-    sb.append("    postalCode: ").append(toIndentedString(postalCode)).append("\n");
-    sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
     sb.append("}");
     return sb.toString();

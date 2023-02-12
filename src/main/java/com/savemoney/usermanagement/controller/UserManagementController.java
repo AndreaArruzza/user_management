@@ -24,7 +24,7 @@ public class UserManagementController implements UserManagementApi {
 
     @Override
     public ResponseEntity<UsersResource> getUsers() {
-        logger.info("UserManagementController.getUse rs....");
+        logger.info("UserManagementController.getUsers....");
         UsersResource resource = new UsersResource();
         resource.setUsersList(mapper.entityListToResource(service.getUsers()));
         logger.info("UserManagementController.getUsers result => {}", resource);
@@ -33,7 +33,7 @@ public class UserManagementController implements UserManagementApi {
 
     @Override
     public ResponseEntity<UserResource> getUserById(Long id, Boolean details) {
-        logger.info("UserManagementController.getUserById....");
+        logger.info("UserManagementController.getUserById with input {} {}  ....", id, details);
         UserResource resource = mapper.entityToResource(service.getUserById(id, details));
         logger.info("UserManagementController.getUserById result => {}", resource);
         return ResponseEntity.ok(resource);
@@ -41,24 +41,29 @@ public class UserManagementController implements UserManagementApi {
 
     @Override
     public ResponseEntity<CheckIfUserExistsResource> checkIfUserExists(CheckIfUserExistsDto checkIfUserExistsDto) {
-        CheckIfUserExistsResource resource = new CheckIfUserExistsResource();
-        resource.setIsUserExists(service.checkUserExists(checkIfUserExistsDto.getId(),checkIfUserExistsDto.getEmail()));
+        logger.info("UserManagementController.checkIfUserExists with input.... {}", checkIfUserExistsDto);
+        CheckIfUserExistsResource resource = service.checkUserExists(checkIfUserExistsDto.getId(),checkIfUserExistsDto.getEmail());
+        logger.info("UserManagementController.updateUser with result => {}", resource);
         return ResponseEntity.ok(resource);
     }
 
     @Override
-    public ResponseEntity<CreateUserResource> createUser(NewUser newUser) {
-        CreateUserResource resource = new CreateUserResource();
-        Long newId = service.createUser(mapper.dtoToEntity(newUser));
+    public ResponseEntity<NewUserResource> insertUser(NewUser newUser) {
+        NewUserResource resource = new NewUserResource();
+        logger.info("insert new user with input {}....", newUser);
+        Long newId = service.insertUser(mapper.dtoToEntity(newUser));
         resource.setIsCreatedUser(newId != null);
         resource.setId(newId);
+        logger.info("insert new user with id {}", newId);
         return ResponseEntity.ok(resource);
     }
 
     @Override
     public ResponseEntity<UpdateUserResource> updateUser(UserDto userDto) {
-        UpdateUserResource updateUserResource = new UpdateUserResource();
-        updateUserResource.setMessage(service.updateUser(userDto));
-        return ResponseEntity.ok(updateUserResource);
+        logger.info("UserManagementController.updateUser with input.... {}", userDto);
+        UpdateUserResource resource = new UpdateUserResource();
+        resource.setMessage(service.updateUser(userDto));
+        logger.info("UserManagementController.updateUser with result => {}", resource);
+        return ResponseEntity.ok(resource);
     }
 }

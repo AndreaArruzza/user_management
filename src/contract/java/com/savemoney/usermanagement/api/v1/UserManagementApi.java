@@ -7,8 +7,8 @@ package com.savemoney.usermanagement.api.v1;
 
 import com.savemoney.usermanagement.model.v1.CheckIfUserExistsDto;
 import com.savemoney.usermanagement.model.v1.CheckIfUserExistsResource;
-import com.savemoney.usermanagement.model.v1.CreateUserResource;
 import com.savemoney.usermanagement.model.v1.NewUser;
+import com.savemoney.usermanagement.model.v1.NewUserResource;
 import com.savemoney.usermanagement.model.v1.UpdateUserResource;
 import com.savemoney.usermanagement.model.v1.UserDto;
 import com.savemoney.usermanagement.model.v1.UserResource;
@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-09T09:19:28.207671900+01:00[Europe/Rome]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-12T19:40:14.230716700+01:00[Europe/Rome]")
 @Validated
 @Tag(name = "user-management", description = "the user-management API")
 public interface UserManagementApi {
@@ -70,38 +70,6 @@ public interface UserManagementApi {
     )
     ResponseEntity<CheckIfUserExistsResource> checkIfUserExists(
         @Parameter(name = "CheckIfUserExistsDto", description = "body", schema = @Schema(description = "")) @Valid @RequestBody(required = false) CheckIfUserExistsDto checkIfUserExistsDto
-    );
-
-
-    /**
-     * POST /user-management/v1/create-user : Create a new user
-     *
-     * @param newUser new user dto (required)
-     * @return OK (status code 200)
-     *         or Created (status code 201)
-     *         or Unauthorized (status code 401)
-     *         or Forbidden (status code 403)
-     *         or Not found (status code 404)
-     */
-    @Operation(
-        operationId = "createUser",
-        summary = "Create a new user",
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  CreateUserResource.class))),
-            @ApiResponse(responseCode = "201", description = "Created"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-            @ApiResponse(responseCode = "403", description = "Forbidden"),
-            @ApiResponse(responseCode = "404", description = "Not found")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/user-management/v1/create-user",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    ResponseEntity<CreateUserResource> createUser(
-        @Parameter(name = "NewUser", description = "new user dto", required = true, schema = @Schema(description = "")) @Valid @RequestBody NewUser newUser
     );
 
 
@@ -165,6 +133,38 @@ public interface UserManagementApi {
     )
     ResponseEntity<UsersResource> getUsers(
         
+    );
+
+
+    /**
+     * POST /user-management/v1/insert-user : Insert a new user
+     *
+     * @param newUser new user dto (required)
+     * @return OK (status code 200)
+     *         or Created (status code 201)
+     *         or Unauthorized (status code 401)
+     *         or Forbidden (status code 403)
+     *         or Not found (status code 404)
+     */
+    @Operation(
+        operationId = "insertUser",
+        summary = "Insert a new user",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(implementation =  NewUserResource.class))),
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Not found")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/user-management/v1/insert-user",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    ResponseEntity<NewUserResource> insertUser(
+        @Parameter(name = "NewUser", description = "new user dto", required = true, schema = @Schema(description = "")) @Valid @RequestBody NewUser newUser
     );
 
 

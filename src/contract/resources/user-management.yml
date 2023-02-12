@@ -87,16 +87,16 @@ paths:
         '404':
           description: Not found
 
-  /user-management/v1/create-user:
+  /user-management/v1/insert-user:
     post:
-      summary: Create a new user
-      operationId: createUser
+      summary: Insert a new user
+      operationId: insertUser
       requestBody:
         description: new user dto
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/newUser'
+              $ref: '#/components/schemas/NewUser'
         required: true
       responses:
         '200':
@@ -104,7 +104,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateUserResource'
+                $ref: '#/components/schemas/NewUserResource'
         '201':
           description: Created
         '401':
@@ -154,7 +154,9 @@ components:
     UserResource:
       type: object
       properties:
-        userId:
+        id:
+          type: string
+        email:
           type: string
         password:
           type: string
@@ -175,12 +177,7 @@ components:
           format: date
         birthPlace:
           type: string
-          format: date
         address:
-          type: string
-        postalCode:
-          type: string
-        email:
           type: string
         phone:
           type: string
@@ -201,21 +198,12 @@ components:
       properties:
         isUserExists:
           type: boolean
-
-
-    newUser:
-      type: object
-      required:
-        - email
-        - password
-        - isValid
-      properties:
+        id:
+          type: integer
+          format: int64
         email:
           type: string
-        password:
-           type: string
-        isValid:
-           type: boolean
+
 
 
     UserDto:
@@ -226,8 +214,6 @@ components:
         id:
           type: integer
           format: int64
-        email:
-          type: string
         password:
           type: string
         isValid:
@@ -246,7 +232,21 @@ components:
         phone:
           type: string
 
-    CreateUserResource:
+    NewUser:
+      type: object
+      required:
+        - email
+        - password
+        - isValid
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        isValid:
+          type: boolean
+
+    NewUserResource:
       type: object
       properties:
         id:

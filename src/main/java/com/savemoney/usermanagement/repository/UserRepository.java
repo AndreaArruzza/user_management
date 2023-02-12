@@ -14,4 +14,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByIdAndIsValidIsTrue(Long userId);
 
     List<User> findAllByIsValidIsTrue();
+
+    Optional<User> findByIsValidIsTrueAndIdAndEmail(Long userId, String email);
 }

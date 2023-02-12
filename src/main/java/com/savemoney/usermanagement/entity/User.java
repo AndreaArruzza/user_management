@@ -66,4 +66,16 @@ public class User {
         return id != null && Objects.equals(id, user.id);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userDetail=" + userDetail +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", isValid=" + isValid +
+                ", createdOn=" + createdOn +
+                ", lastLogin=" + lastLogin +
+                '}';
+    }
 }

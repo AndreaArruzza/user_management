@@ -17,11 +17,17 @@ import javax.annotation.Generated;
  * CheckIfUserExistsResource
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-09T09:19:28.207671900+01:00[Europe/Rome]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-12T19:40:14.230716700+01:00[Europe/Rome]")
 public class CheckIfUserExistsResource   {
 
   @JsonProperty("isUserExists")
   private Boolean isUserExists;
+
+  @JsonProperty("id")
+  private Long id;
+
+  @JsonProperty("email")
+  private String email;
 
   public CheckIfUserExistsResource isUserExists(Boolean isUserExists) {
     this.isUserExists = isUserExists;
@@ -42,6 +48,44 @@ public class CheckIfUserExistsResource   {
     this.isUserExists = isUserExists;
   }
 
+  public CheckIfUserExistsResource id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Get id
+   * @return id
+  */
+  
+  @Schema(name = "id", required = false)
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public CheckIfUserExistsResource email(String email) {
+    this.email = email;
+    return this;
+  }
+
+  /**
+   * Get email
+   * @return email
+  */
+  
+  @Schema(name = "email", required = false)
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -51,12 +95,14 @@ public class CheckIfUserExistsResource   {
       return false;
     }
     CheckIfUserExistsResource checkIfUserExistsResource = (CheckIfUserExistsResource) o;
-    return Objects.equals(this.isUserExists, checkIfUserExistsResource.isUserExists);
+    return Objects.equals(this.isUserExists, checkIfUserExistsResource.isUserExists) &&
+        Objects.equals(this.id, checkIfUserExistsResource.id) &&
+        Objects.equals(this.email, checkIfUserExistsResource.email);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(isUserExists);
+    return Objects.hash(isUserExists, id, email);
   }
 
   @Override
@@ -64,6 +110,8 @@ public class CheckIfUserExistsResource   {
     StringBuilder sb = new StringBuilder();
     sb.append("class CheckIfUserExistsResource {\n");
     sb.append("    isUserExists: ").append(toIndentedString(isUserExists)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("}");
     return sb.toString();
   }

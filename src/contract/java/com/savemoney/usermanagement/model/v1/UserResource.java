@@ -18,11 +18,14 @@ import javax.annotation.Generated;
  * UserResource
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-09T09:19:28.207671900+01:00[Europe/Rome]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-12T19:40:14.230716700+01:00[Europe/Rome]")
 public class UserResource   {
 
-  @JsonProperty("userId")
-  private String userId;
+  @JsonProperty("id")
+  private String id;
+
+  @JsonProperty("email")
+  private String email;
 
   @JsonProperty("password")
   private String password;
@@ -33,23 +36,42 @@ public class UserResource   {
   @JsonProperty("userDetail")
   private UserDetailResource userDetail;
 
-  public UserResource userId(String userId) {
-    this.userId = userId;
+  public UserResource id(String id) {
+    this.id = id;
     return this;
   }
 
   /**
-   * Get userId
-   * @return userId
+   * Get id
+   * @return id
   */
   
-  @Schema(name = "userId", required = false)
-  public String getUserId() {
-    return userId;
+  @Schema(name = "id", required = false)
+  public String getId() {
+    return id;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public UserResource email(String email) {
+    this.email = email;
+    return this;
+  }
+
+  /**
+   * Get email
+   * @return email
+  */
+  
+  @Schema(name = "email", required = false)
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public UserResource password(String password) {
@@ -118,7 +140,8 @@ public class UserResource   {
       return false;
     }
     UserResource userResource = (UserResource) o;
-    return Objects.equals(this.userId, userResource.userId) &&
+    return Objects.equals(this.id, userResource.id) &&
+        Objects.equals(this.email, userResource.email) &&
         Objects.equals(this.password, userResource.password) &&
         Objects.equals(this.isValid, userResource.isValid) &&
         Objects.equals(this.userDetail, userResource.userDetail);
@@ -126,14 +149,15 @@ public class UserResource   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(userId, password, isValid, userDetail);
+    return Objects.hash(id, email, password, isValid, userDetail);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UserResource {\n");
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    isValid: ").append(toIndentedString(isValid)).append("\n");
     sb.append("    userDetail: ").append(toIndentedString(userDetail)).append("\n");

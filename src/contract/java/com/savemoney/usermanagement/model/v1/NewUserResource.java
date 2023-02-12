@@ -14,19 +14,19 @@ import java.util.*;
 import javax.annotation.Generated;
 
 /**
- * CheckIfUserExistsDto
+ * NewUserResource
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-12T19:40:14.230716700+01:00[Europe/Rome]")
-public class CheckIfUserExistsDto   {
+public class NewUserResource   {
 
   @JsonProperty("id")
   private Long id;
 
-  @JsonProperty("email")
-  private String email;
+  @JsonProperty("isCreatedUser")
+  private Boolean isCreatedUser;
 
-  public CheckIfUserExistsDto id(Long id) {
+  public NewUserResource id(Long id) {
     this.id = id;
     return this;
   }
@@ -35,8 +35,8 @@ public class CheckIfUserExistsDto   {
    * Get id
    * @return id
   */
-  @NotNull 
-  @Schema(name = "id", required = true)
+  
+  @Schema(name = "id", required = false)
   public Long getId() {
     return id;
   }
@@ -45,23 +45,23 @@ public class CheckIfUserExistsDto   {
     this.id = id;
   }
 
-  public CheckIfUserExistsDto email(String email) {
-    this.email = email;
+  public NewUserResource isCreatedUser(Boolean isCreatedUser) {
+    this.isCreatedUser = isCreatedUser;
     return this;
   }
 
   /**
-   * Get email
-   * @return email
+   * Get isCreatedUser
+   * @return isCreatedUser
   */
   
-  @Schema(name = "email", required = false)
-  public String getEmail() {
-    return email;
+  @Schema(name = "isCreatedUser", required = false)
+  public Boolean getIsCreatedUser() {
+    return isCreatedUser;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setIsCreatedUser(Boolean isCreatedUser) {
+    this.isCreatedUser = isCreatedUser;
   }
 
   @Override
@@ -72,22 +72,22 @@ public class CheckIfUserExistsDto   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CheckIfUserExistsDto checkIfUserExistsDto = (CheckIfUserExistsDto) o;
-    return Objects.equals(this.id, checkIfUserExistsDto.id) &&
-        Objects.equals(this.email, checkIfUserExistsDto.email);
+    NewUserResource newUserResource = (NewUserResource) o;
+    return Objects.equals(this.id, newUserResource.id) &&
+        Objects.equals(this.isCreatedUser, newUserResource.isCreatedUser);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, email);
+    return Objects.hash(id, isCreatedUser);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CheckIfUserExistsDto {\n");
+    sb.append("class NewUserResource {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    isCreatedUser: ").append(toIndentedString(isCreatedUser)).append("\n");
     sb.append("}");
     return sb.toString();
   }
