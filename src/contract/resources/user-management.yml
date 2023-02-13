@@ -96,7 +96,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewUser'
+              $ref: '#/components/schemas/NewUserDto'
         required: true
       responses:
         '200':
@@ -123,7 +123,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserDto'
+              $ref: '#/components/schemas/UpdateUserDto'
         required: true
       responses:
         '200':
@@ -204,9 +204,7 @@ components:
         email:
           type: string
 
-
-
-    UserDto:
+    UpdateUserDto:
       type: object
       required:
         - id
@@ -229,22 +227,46 @@ components:
           type: string
         address:
           type: string
+        country:
+          type: string
+        postalCode:
+          type: string
         phone:
           type: string
 
-    NewUser:
+    UpdateUserResource:
+      type: object
+      properties:
+        message:
+          type: string
+
+    NewUserDto:
       type: object
       required:
         - email
         - password
-        - isValid
       properties:
         email:
           type: string
         password:
           type: string
-        isValid:
-          type: boolean
+        name:
+          type: string
+        surname:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        birthPlace:
+          type: string
+        address:
+          type: string
+        country:
+          type: string
+        postalCode:
+          type: string
+        phone:
+          type: string
 
     NewUserResource:
       type: object
@@ -255,8 +277,3 @@ components:
         isCreatedUser:
           type: boolean
 
-    UpdateUserResource:
-      type: object
-      properties:
-        message:
-          type: string

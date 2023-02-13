@@ -35,11 +35,17 @@ public class UserDetail {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "postalCode")
+    private String postalCode;
+
+    @Column(name = "country")
+    private String country;
+
 
     public UserDetail() {
     }
 
-    public UserDetail(Long id, String name, String surname, LocalDate birthDate, String birthPlace, String address, String phone) {
+    public UserDetail(Long id, String name, String surname, LocalDate birthDate, String birthPlace, String address, String phone, String postalCode, String country) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -47,6 +53,8 @@ public class UserDetail {
         this.birthPlace = birthPlace;
         this.address = address;
         this.phone = phone;
+        this.postalCode = postalCode;
+        this.country = country;
     }
 
     @Override
@@ -59,6 +67,8 @@ public class UserDetail {
                 ", birthPlace='" + birthPlace + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", country='" + country + '\'' +
                 '}';
     }
 }

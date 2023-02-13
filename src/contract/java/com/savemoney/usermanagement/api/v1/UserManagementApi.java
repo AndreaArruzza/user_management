@@ -7,10 +7,10 @@ package com.savemoney.usermanagement.api.v1;
 
 import com.savemoney.usermanagement.model.v1.CheckIfUserExistsDto;
 import com.savemoney.usermanagement.model.v1.CheckIfUserExistsResource;
-import com.savemoney.usermanagement.model.v1.NewUser;
+import com.savemoney.usermanagement.model.v1.NewUserDto;
 import com.savemoney.usermanagement.model.v1.NewUserResource;
+import com.savemoney.usermanagement.model.v1.UpdateUserDto;
 import com.savemoney.usermanagement.model.v1.UpdateUserResource;
-import com.savemoney.usermanagement.model.v1.UserDto;
 import com.savemoney.usermanagement.model.v1.UserResource;
 import com.savemoney.usermanagement.model.v1.UsersResource;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-12T19:40:14.230716700+01:00[Europe/Rome]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-13T19:41:36.166055+01:00[Europe/Rome]")
 @Validated
 @Tag(name = "user-management", description = "the user-management API")
 public interface UserManagementApi {
@@ -139,7 +139,7 @@ public interface UserManagementApi {
     /**
      * POST /user-management/v1/insert-user : Insert a new user
      *
-     * @param newUser new user dto (required)
+     * @param newUserDto new user dto (required)
      * @return OK (status code 200)
      *         or Created (status code 201)
      *         or Unauthorized (status code 401)
@@ -164,14 +164,14 @@ public interface UserManagementApi {
         consumes = { "application/json" }
     )
     ResponseEntity<NewUserResource> insertUser(
-        @Parameter(name = "NewUser", description = "new user dto", required = true, schema = @Schema(description = "")) @Valid @RequestBody NewUser newUser
+        @Parameter(name = "NewUserDto", description = "new user dto", required = true, schema = @Schema(description = "")) @Valid @RequestBody NewUserDto newUserDto
     );
 
 
     /**
      * PUT /user-management/v1/update-user : update an existing user
      *
-     * @param userDto update user dto (required)
+     * @param updateUserDto update user dto (required)
      * @return OK (status code 200)
      *         or Created (status code 201)
      *         or Unauthorized (status code 401)
@@ -196,7 +196,7 @@ public interface UserManagementApi {
         consumes = { "application/json" }
     )
     ResponseEntity<UpdateUserResource> updateUser(
-        @Parameter(name = "UserDto", description = "update user dto", required = true, schema = @Schema(description = "")) @Valid @RequestBody UserDto userDto
+        @Parameter(name = "UpdateUserDto", description = "update user dto", required = true, schema = @Schema(description = "")) @Valid @RequestBody UpdateUserDto updateUserDto
     );
 
 }

@@ -3,7 +3,7 @@ package com.savemoney.usermanagement.mapper;
 import com.savemoney.usermanagement.entity.User;
 import com.savemoney.usermanagement.entity.UserDetail;
 import com.savemoney.usermanagement.model.CheckUserExistsModel;
-import com.savemoney.usermanagement.model.v1.NewUser;
+import com.savemoney.usermanagement.model.v1.NewUserDto;
 import com.savemoney.usermanagement.model.v1.UserDetailResource;
 import com.savemoney.usermanagement.model.v1.UserResource;
 import org.mapstruct.Mapper;
@@ -18,5 +18,5 @@ public interface UserMapper {
     UserResource entityToResource(User user);
     List<UserResource> entityListToResource(List<User> users);
 
-    User dtoToEntity(NewUser userDto);
+    User dtoToEntity(NewUserDto userDto);
 }

@@ -16,11 +16,11 @@ import java.util.*;
 import javax.annotation.Generated;
 
 /**
- * UserDto
+ * UpdateUserDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-12T19:40:14.230716700+01:00[Europe/Rome]")
-public class UserDto   {
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-13T19:41:36.166055+01:00[Europe/Rome]")
+public class UpdateUserDto   {
 
   @JsonProperty("id")
   private Long id;
@@ -47,10 +47,16 @@ public class UserDto   {
   @JsonProperty("address")
   private String address;
 
+  @JsonProperty("country")
+  private String country;
+
+  @JsonProperty("postalCode")
+  private String postalCode;
+
   @JsonProperty("phone")
   private String phone;
 
-  public UserDto id(Long id) {
+  public UpdateUserDto id(Long id) {
     this.id = id;
     return this;
   }
@@ -69,7 +75,7 @@ public class UserDto   {
     this.id = id;
   }
 
-  public UserDto password(String password) {
+  public UpdateUserDto password(String password) {
     this.password = password;
     return this;
   }
@@ -88,7 +94,7 @@ public class UserDto   {
     this.password = password;
   }
 
-  public UserDto isValid(Boolean isValid) {
+  public UpdateUserDto isValid(Boolean isValid) {
     this.isValid = isValid;
     return this;
   }
@@ -107,7 +113,7 @@ public class UserDto   {
     this.isValid = isValid;
   }
 
-  public UserDto name(String name) {
+  public UpdateUserDto name(String name) {
     this.name = name;
     return this;
   }
@@ -126,7 +132,7 @@ public class UserDto   {
     this.name = name;
   }
 
-  public UserDto surname(String surname) {
+  public UpdateUserDto surname(String surname) {
     this.surname = surname;
     return this;
   }
@@ -145,7 +151,7 @@ public class UserDto   {
     this.surname = surname;
   }
 
-  public UserDto birthDate(LocalDate birthDate) {
+  public UpdateUserDto birthDate(LocalDate birthDate) {
     this.birthDate = birthDate;
     return this;
   }
@@ -164,7 +170,7 @@ public class UserDto   {
     this.birthDate = birthDate;
   }
 
-  public UserDto birthPlace(String birthPlace) {
+  public UpdateUserDto birthPlace(String birthPlace) {
     this.birthPlace = birthPlace;
     return this;
   }
@@ -183,7 +189,7 @@ public class UserDto   {
     this.birthPlace = birthPlace;
   }
 
-  public UserDto address(String address) {
+  public UpdateUserDto address(String address) {
     this.address = address;
     return this;
   }
@@ -202,7 +208,45 @@ public class UserDto   {
     this.address = address;
   }
 
-  public UserDto phone(String phone) {
+  public UpdateUserDto country(String country) {
+    this.country = country;
+    return this;
+  }
+
+  /**
+   * Get country
+   * @return country
+  */
+  
+  @Schema(name = "country", required = false)
+  public String getCountry() {
+    return country;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
+  }
+
+  public UpdateUserDto postalCode(String postalCode) {
+    this.postalCode = postalCode;
+    return this;
+  }
+
+  /**
+   * Get postalCode
+   * @return postalCode
+  */
+  
+  @Schema(name = "postalCode", required = false)
+  public String getPostalCode() {
+    return postalCode;
+  }
+
+  public void setPostalCode(String postalCode) {
+    this.postalCode = postalCode;
+  }
+
+  public UpdateUserDto phone(String phone) {
     this.phone = phone;
     return this;
   }
@@ -229,27 +273,29 @@ public class UserDto   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserDto userDto = (UserDto) o;
-    return Objects.equals(this.id, userDto.id) &&
-        Objects.equals(this.password, userDto.password) &&
-        Objects.equals(this.isValid, userDto.isValid) &&
-        Objects.equals(this.name, userDto.name) &&
-        Objects.equals(this.surname, userDto.surname) &&
-        Objects.equals(this.birthDate, userDto.birthDate) &&
-        Objects.equals(this.birthPlace, userDto.birthPlace) &&
-        Objects.equals(this.address, userDto.address) &&
-        Objects.equals(this.phone, userDto.phone);
+    UpdateUserDto updateUserDto = (UpdateUserDto) o;
+    return Objects.equals(this.id, updateUserDto.id) &&
+        Objects.equals(this.password, updateUserDto.password) &&
+        Objects.equals(this.isValid, updateUserDto.isValid) &&
+        Objects.equals(this.name, updateUserDto.name) &&
+        Objects.equals(this.surname, updateUserDto.surname) &&
+        Objects.equals(this.birthDate, updateUserDto.birthDate) &&
+        Objects.equals(this.birthPlace, updateUserDto.birthPlace) &&
+        Objects.equals(this.address, updateUserDto.address) &&
+        Objects.equals(this.country, updateUserDto.country) &&
+        Objects.equals(this.postalCode, updateUserDto.postalCode) &&
+        Objects.equals(this.phone, updateUserDto.phone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, password, isValid, name, surname, birthDate, birthPlace, address, phone);
+    return Objects.hash(id, password, isValid, name, surname, birthDate, birthPlace, address, country, postalCode, phone);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserDto {\n");
+    sb.append("class UpdateUserDto {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    isValid: ").append(toIndentedString(isValid)).append("\n");
@@ -258,6 +304,8 @@ public class UserDto   {
     sb.append("    birthDate: ").append(toIndentedString(birthDate)).append("\n");
     sb.append("    birthPlace: ").append(toIndentedString(birthPlace)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
+    sb.append("    country: ").append(toIndentedString(country)).append("\n");
+    sb.append("    postalCode: ").append(toIndentedString(postalCode)).append("\n");
     sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
     sb.append("}");
     return sb.toString();

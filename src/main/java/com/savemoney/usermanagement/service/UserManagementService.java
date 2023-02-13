@@ -4,7 +4,7 @@ import com.savemoney.usermanagement.entity.User;
 import com.savemoney.usermanagement.entity.UserDetail;
 import com.savemoney.usermanagement.mapper.UserMapper;
 import com.savemoney.usermanagement.model.v1.CheckIfUserExistsResource;
-import com.savemoney.usermanagement.model.v1.UserDto;
+import com.savemoney.usermanagement.model.v1.UpdateUserDto;
 import com.savemoney.usermanagement.repository.UserRepository;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
@@ -31,6 +31,13 @@ public class UserManagementService {
     private BCryptPasswordEncoder passwordEncoder;
 
 
+    public List<User> getUsers() {
+        List<User> users =  userRepository.findAllByIsValidIsTrue();
+        if(CollectionUtils.isEmpty(users)) throw new RuntimeException("empty list");
+        logger.info("get users {}", users);
+        return users;
+    }
+
     public User getUserById(Long userId, Boolean details) {
         User user = userRepository.findByIdAndIsValidIsTrue(userId).orElseThrow(() -> new RuntimeException("user not found"));
         //todo creare custom exception
@@ -41,37 +48,22 @@ public class UserManagementService {
         return user;
     }
 
-    public List<User> getUsers() {
-        List<User> users =  userRepository.findAllByIsValidIsTrue();
-        if(CollectionUtils.isEmpty(users)) throw new RuntimeException("empty list");
-        logger.info("get users {}", users);
-        return users;
-    }
+    public CheckIfUserExistsResource checkUserExists(Long userId, String email) {
+        Optional<User> checkUser = Optional.empty();
+        CheckIfUserExistsResource checkIfUserExistsResource = new CheckIfUserExistsResource();
 
-    @Transactional
-    public String updateUser(UserDto userDto) {
-            User userbyId = getUserById(userDto.getId(),false);
-            userbyId.setPassword(userDto.getPassword());
-            userbyId.setIsValid(userDto.getIsValid());
-
-            UserDetail userDetail = new UserDetail();
-            userDetail.setName(userDto.getName());
-            userDetail.setSurname(userDto.getSurname());
-            userDetail.setBirthPlace(userDto.getBirthPlace());
-            userDetail.setBirthDate(userDto.getBirthDate());
-            userDetail.setAddress(userDto.getAddress());
-            userDetail.setPhone(userDto.getPhone());
-
-            userbyId.setUserDetail(userDetail);
-        try {
-            userRepository.save(userbyId);
-            logger.info("update done");
-            return "update is OK!";
+        if(ObjectUtils.isNotEmpty(userId) && ObjectUtils.isNotEmpty(email)){
+            checkUser = userRepository.findByIsValidIsTrueAndIdAndEmail(userId,email);
         }
-        catch(Exception e){
-            logger.error(e.getLocalizedMessage());
-            throw new RuntimeException(e.getLocalizedMessage());
+        else if(ObjectUtils.isNotEmpty(userId) || ObjectUtils.isNotEmpty(email)){
+            checkUser = userRepository.findByIsValidIsTrueAndIdOrEmail(userId,email);
         }
+
+        logger.info("check user {}", checkUser);
+        checkIfUserExistsResource.setIsUserExists((checkUser.isPresent()) ? Boolean.TRUE : Boolean.FALSE);
+        checkIfUserExistsResource.setId(checkUser.map(User::getId).orElse(null));
+        checkIfUserExistsResource.setEmail((checkUser.isPresent()) ? checkUser.get().getEmail() : "");
+        return checkIfUserExistsResource;
     }
 
     @Transactional
@@ -89,20 +81,28 @@ public class UserManagementService {
         }
     }
 
-    public CheckIfUserExistsResource checkUserExists(Long userId, String email) {
-        Optional<User> checkUser = Optional.empty();
-        CheckIfUserExistsResource checkIfUserExistsResource = new CheckIfUserExistsResource();
-        if(ObjectUtils.isNotEmpty(userId) && ObjectUtils.isNotEmpty(email)){
-            checkUser = userRepository.findByIsValidIsTrueAndIdAndEmail(userId,email);
+    @Transactional
+    public String updateUser(UpdateUserDto userDto) {
+            User userbyId = getUserById(userDto.getId(),false);
+            userbyId.setPassword(userDto.getPassword());
+            userbyId.setIsValid(userDto.getIsValid());
+            if(ObjectUtils.isNotEmpty(userbyId.getUserDetail())){
+                userbyId.getUserDetail().setName(userDto.getName());
+                userbyId.getUserDetail().setSurname(userDto.getSurname());
+                userbyId.getUserDetail().setBirthPlace(userDto.getBirthPlace());
+                userbyId.getUserDetail().setBirthDate(userDto.getBirthDate());
+                userbyId.getUserDetail().setAddress(userDto.getAddress());
+                userbyId.getUserDetail().setPhone(userDto.getPhone());
+            }
+        try {
+            userRepository.save(userbyId);
+            logger.info("update done");
+            return "update is OK!";
         }
-        else if(ObjectUtils.isNotEmpty(userId) || ObjectUtils.isNotEmpty(email)){
-            checkUser = userRepository.findByIsValidIsTrueAndIdOrEmail(userId,email);
+        catch(Exception e){
+            logger.error(e.getLocalizedMessage());
+            throw new RuntimeException(e.getLocalizedMessage());
         }
-
-        logger.info("check user {}", checkUser);
-        checkIfUserExistsResource.setIsUserExists((checkUser.isPresent()) ? Boolean.TRUE : Boolean.FALSE);
-        checkIfUserExistsResource.setId(checkUser.map(User::getId).orElse(null));
-        checkIfUserExistsResource.setEmail((checkUser.isPresent()) ? checkUser.get().getEmail() : "");
-        return checkIfUserExistsResource;
     }
+
 }

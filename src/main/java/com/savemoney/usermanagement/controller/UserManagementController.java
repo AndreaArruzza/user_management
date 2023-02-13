@@ -47,11 +47,12 @@ public class UserManagementController implements UserManagementApi {
         return ResponseEntity.ok(resource);
     }
 
+
     @Override
-    public ResponseEntity<NewUserResource> insertUser(NewUser newUser) {
+    public ResponseEntity<NewUserResource> insertUser(NewUserDto newUserDto) {
         NewUserResource resource = new NewUserResource();
-        logger.info("insert new user with input {}....", newUser);
-        Long newId = service.insertUser(mapper.dtoToEntity(newUser));
+        logger.info("insert new user with input {}....", newUserDto);
+        Long newId = service.insertUser(mapper.dtoToEntity(newUserDto));
         resource.setIsCreatedUser(newId != null);
         resource.setId(newId);
         logger.info("insert new user with id {}", newId);
@@ -59,11 +60,12 @@ public class UserManagementController implements UserManagementApi {
     }
 
     @Override
-    public ResponseEntity<UpdateUserResource> updateUser(UserDto userDto) {
-        logger.info("UserManagementController.updateUser with input.... {}", userDto);
+    public ResponseEntity<UpdateUserResource> updateUser(UpdateUserDto updateUserDto) {
+        logger.info("UserManagementController.updateUser with input.... {}", updateUserDto);
         UpdateUserResource resource = new UpdateUserResource();
-        resource.setMessage(service.updateUser(userDto));
+        resource.setMessage(service.updateUser(updateUserDto));
         logger.info("UserManagementController.updateUser with result => {}", resource);
         return ResponseEntity.ok(resource);
     }
+
 }

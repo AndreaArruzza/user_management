@@ -1,4 +1,4 @@
-package com.savemoney.usermanagement.contract.model.v1;
+package com.savemoney.usermanagement.model.v1;
 
 import java.net.URI;
 import java.util.Objects;
@@ -16,23 +16,17 @@ import java.util.*;
 import javax.annotation.Generated;
 
 /**
- * UserDto
+ * NewUserDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-01-20T19:00:23.887421100+01:00[Europe/Berlin]")
-public class UserDto   {
-
-  @JsonProperty("id")
-  private Long id;
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-13T19:41:36.166055+01:00[Europe/Rome]")
+public class NewUserDto   {
 
   @JsonProperty("email")
   private String email;
 
   @JsonProperty("password")
   private String password;
-
-  @JsonProperty("isValid")
-  private Boolean isValid;
 
   @JsonProperty("name")
   private String name;
@@ -50,29 +44,16 @@ public class UserDto   {
   @JsonProperty("address")
   private String address;
 
+  @JsonProperty("country")
+  private String country;
+
+  @JsonProperty("postalCode")
+  private String postalCode;
+
   @JsonProperty("phone")
   private String phone;
 
-  public UserDto id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-  */
-  @NotNull 
-  @Schema(name = "id", required = true)
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public UserDto email(String email) {
+  public NewUserDto email(String email) {
     this.email = email;
     return this;
   }
@@ -91,7 +72,7 @@ public class UserDto   {
     this.email = email;
   }
 
-  public UserDto password(String password) {
+  public NewUserDto password(String password) {
     this.password = password;
     return this;
   }
@@ -110,26 +91,7 @@ public class UserDto   {
     this.password = password;
   }
 
-  public UserDto isValid(Boolean isValid) {
-    this.isValid = isValid;
-    return this;
-  }
-
-  /**
-   * Get isValid
-   * @return isValid
-  */
-  @NotNull 
-  @Schema(name = "isValid", required = true)
-  public Boolean getIsValid() {
-    return isValid;
-  }
-
-  public void setIsValid(Boolean isValid) {
-    this.isValid = isValid;
-  }
-
-  public UserDto name(String name) {
+  public NewUserDto name(String name) {
     this.name = name;
     return this;
   }
@@ -148,7 +110,7 @@ public class UserDto   {
     this.name = name;
   }
 
-  public UserDto surname(String surname) {
+  public NewUserDto surname(String surname) {
     this.surname = surname;
     return this;
   }
@@ -167,7 +129,7 @@ public class UserDto   {
     this.surname = surname;
   }
 
-  public UserDto birthDate(LocalDate birthDate) {
+  public NewUserDto birthDate(LocalDate birthDate) {
     this.birthDate = birthDate;
     return this;
   }
@@ -186,7 +148,7 @@ public class UserDto   {
     this.birthDate = birthDate;
   }
 
-  public UserDto birthPlace(String birthPlace) {
+  public NewUserDto birthPlace(String birthPlace) {
     this.birthPlace = birthPlace;
     return this;
   }
@@ -205,7 +167,7 @@ public class UserDto   {
     this.birthPlace = birthPlace;
   }
 
-  public UserDto address(String address) {
+  public NewUserDto address(String address) {
     this.address = address;
     return this;
   }
@@ -224,7 +186,45 @@ public class UserDto   {
     this.address = address;
   }
 
-  public UserDto phone(String phone) {
+  public NewUserDto country(String country) {
+    this.country = country;
+    return this;
+  }
+
+  /**
+   * Get country
+   * @return country
+  */
+  
+  @Schema(name = "country", required = false)
+  public String getCountry() {
+    return country;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
+  }
+
+  public NewUserDto postalCode(String postalCode) {
+    this.postalCode = postalCode;
+    return this;
+  }
+
+  /**
+   * Get postalCode
+   * @return postalCode
+  */
+  
+  @Schema(name = "postalCode", required = false)
+  public String getPostalCode() {
+    return postalCode;
+  }
+
+  public void setPostalCode(String postalCode) {
+    this.postalCode = postalCode;
+  }
+
+  public NewUserDto phone(String phone) {
     this.phone = phone;
     return this;
   }
@@ -251,37 +251,37 @@ public class UserDto   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserDto userDto = (UserDto) o;
-    return Objects.equals(this.id, userDto.id) &&
-        Objects.equals(this.email, userDto.email) &&
-        Objects.equals(this.password, userDto.password) &&
-        Objects.equals(this.isValid, userDto.isValid) &&
-        Objects.equals(this.name, userDto.name) &&
-        Objects.equals(this.surname, userDto.surname) &&
-        Objects.equals(this.birthDate, userDto.birthDate) &&
-        Objects.equals(this.birthPlace, userDto.birthPlace) &&
-        Objects.equals(this.address, userDto.address) &&
-        Objects.equals(this.phone, userDto.phone);
+    NewUserDto newUserDto = (NewUserDto) o;
+    return Objects.equals(this.email, newUserDto.email) &&
+        Objects.equals(this.password, newUserDto.password) &&
+        Objects.equals(this.name, newUserDto.name) &&
+        Objects.equals(this.surname, newUserDto.surname) &&
+        Objects.equals(this.birthDate, newUserDto.birthDate) &&
+        Objects.equals(this.birthPlace, newUserDto.birthPlace) &&
+        Objects.equals(this.address, newUserDto.address) &&
+        Objects.equals(this.country, newUserDto.country) &&
+        Objects.equals(this.postalCode, newUserDto.postalCode) &&
+        Objects.equals(this.phone, newUserDto.phone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, email, password, isValid, name, surname, birthDate, birthPlace, address, phone);
+    return Objects.hash(email, password, name, surname, birthDate, birthPlace, address, country, postalCode, phone);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserDto {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("class NewUserDto {\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
-    sb.append("    isValid: ").append(toIndentedString(isValid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    surname: ").append(toIndentedString(surname)).append("\n");
     sb.append("    birthDate: ").append(toIndentedString(birthDate)).append("\n");
     sb.append("    birthPlace: ").append(toIndentedString(birthPlace)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
+    sb.append("    country: ").append(toIndentedString(country)).append("\n");
+    sb.append("    postalCode: ").append(toIndentedString(postalCode)).append("\n");
     sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
     sb.append("}");
     return sb.toString();
