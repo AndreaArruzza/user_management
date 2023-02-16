@@ -1,5 +1,7 @@
 server:
   port: 8081
+  error:
+    include-message: always
 
 spring:
   jpa:
@@ -46,3 +48,4 @@ info:
     name: User Management App
     description: A microservice to manage user login
     version: 0.0.1
+

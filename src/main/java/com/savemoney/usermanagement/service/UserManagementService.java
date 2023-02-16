@@ -1,7 +1,6 @@
 package com.savemoney.usermanagement.service;
 
 import com.savemoney.usermanagement.entity.User;
-import com.savemoney.usermanagement.entity.UserDetail;
 import com.savemoney.usermanagement.mapper.UserMapper;
 import com.savemoney.usermanagement.model.v1.CheckIfUserExistsResource;
 import com.savemoney.usermanagement.model.v1.UpdateUserDto;
@@ -10,9 +9,11 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -33,14 +34,20 @@ public class UserManagementService {
 
     public List<User> getUsers() {
         List<User> users =  userRepository.findAllByIsValidIsTrue();
-        if(CollectionUtils.isEmpty(users)) throw new RuntimeException("empty list");
+        if(CollectionUtils.isEmpty(users)) {
+            logger.error("users not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "users not found");
+        }
         logger.info("get users {}", users);
         return users;
     }
 
     public User getUserById(Long userId, Boolean details) {
-        User user = userRepository.findByIdAndIsValidIsTrue(userId).orElseThrow(() -> new RuntimeException("user not found"));
-        //todo creare custom exception
+        User user = userRepository.findByIdAndIsValidIsTrue(userId).orElseThrow(() -> {
+            logger.error("user not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
+        });
+
         if(!details){
             user.setUserDetail(null);
         }
@@ -77,7 +84,7 @@ public class UserManagementService {
         }
         catch(Exception e){
             logger.error(e.getLocalizedMessage());
-            throw new RuntimeException(e.getLocalizedMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
         }
     }
 
@@ -101,7 +108,7 @@ public class UserManagementService {
         }
         catch(Exception e){
             logger.error(e.getLocalizedMessage());
-            throw new RuntimeException(e.getLocalizedMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
         }
     }
 

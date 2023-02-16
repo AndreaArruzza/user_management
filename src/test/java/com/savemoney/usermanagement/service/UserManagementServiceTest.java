@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class UserManagementServiceTest {
     @Test
     void getUsers_KO(){
         when(repository.findAllByIsValidIsTrue()).thenReturn(new ArrayList<>());
-        assertThrows(RuntimeException.class, () -> service.getUsers());
+        assertThrows(ResponseStatusException.class, () -> service.getUsers());
     }
 
     @Test
@@ -51,8 +52,8 @@ public class UserManagementServiceTest {
 
     @Test
     void getUserById_KO(){
-        when(repository.findByIdAndIsValidIsTrue(anyLong())).thenReturn(null);
-        assertThrows(RuntimeException.class, () -> service.getUserById(1L,true));
+        when(repository.findByIdAndIsValidIsTrue(anyLong())).thenReturn(Optional.empty());
+        assertThrows(ResponseStatusException.class, () -> service.getUserById(1L,true));
     }
 
     @Test
