@@ -49,3 +49,5 @@ info:
     description: A microservice to manage user login
     version: 0.0.1
 
+microserviceCode: UserManagement
+
